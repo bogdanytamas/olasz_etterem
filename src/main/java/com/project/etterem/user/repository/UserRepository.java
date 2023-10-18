@@ -8,6 +8,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    /**
+     *
+     * Repository - Query:
+     * A JPA/Hibernate-t nem érdekli, hogy hogyan hívják az SQL tábládat,
+     * az érdekli, hogy hogyan hívják az Entitás osztályodat.
+     */
+
     @Query("SELECT u FROM User u WHERE u.email = :email")
     User findByEmail(String email);
 

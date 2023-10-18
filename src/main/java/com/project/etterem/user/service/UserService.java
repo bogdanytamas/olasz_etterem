@@ -5,6 +5,8 @@ import com.project.etterem.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -17,5 +19,9 @@ public class UserService {
 
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow();
+    }
+
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 }

@@ -17,23 +17,25 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//TODO - PÉLDAKÓD CONFIG BŐVÍTÉSRE
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests(requests -> requests
-//                        .requestMatchers("/vertretungsplan").hasAnyRole("SCHUELER", "LEHRER", "VERWALTUNG")
-//                        .anyRequest().authenticated()
-//                )
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll()
-//                )
-//                .logout(logout -> logout
-//                        .permitAll());
-//
-//        return http.build();
-//    }
+    /**
+     * Példa a SecurityFilterChain használatára:
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+               .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/vertretungsplan").hasAnyRole("SCHUELER", "LEHRER", "VERWALTUNG")
+                        .anyRequest().authenticated()
+                )
+               .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                       .permitAll());
+
+        return http.build();
+    }
+     */
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -42,11 +44,15 @@ public class SecurityConfig {
                 cors(cors -> cors.disable()).
                 authorizeRequests(authorize -> authorize
                         .requestMatchers("/api/register").permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
-                .formLogin(withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/api/login")
+                        .defaultSuccessUrl("/api/user/list-users") //welcome oldal helye
+                        .permitAll()
+                )
                 .httpBasic(withDefaults());
-        return http.build();
+         return http.build();
     }
 
 }

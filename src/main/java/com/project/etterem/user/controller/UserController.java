@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -25,6 +27,12 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/list-users")
+    public ResponseEntity<List<User>> getAllUser() {
+        List<User> userEntities = userService.getAllUser();
+        return new ResponseEntity<>(userEntities, HttpStatus.OK);
     }
 
 }
